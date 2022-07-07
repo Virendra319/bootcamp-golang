@@ -215,17 +215,24 @@ type BankAccounts struct {
 func (ba *BankAccounts) deposit(accountNumber string, amount int) {
 	ba.mu.Lock()
 	defer ba.mu.Unlock()
-	ba.accountDetails[accountNumber] += amount
+	initialAmount := ba.accountDetails[accountNumber]
+	finalAmount := initialAmount + amount
+	ba.accountDetails[accountNumber] = finalAmount
+	fmt.Println("initial balance:", initialAmount, ", amount deposited:", amount, ", current balance", finalAmount)
 }
 func (ba *BankAccounts) withdraw(accountNumber string, amount int) {
 	ba.mu.Lock()
 	defer ba.mu.Unlock()
-	if ba.accountDetails[accountNumber]-amount < 0 {
+	initialAmount := ba.accountDetails[accountNumber]
+	finalAmount := initialAmount
+	if initialAmount-amount < 0 {
 		//panic("can't withdraw an amount more than current balance")
 		fmt.Println("Can't withdraw an amount more than current balance, ")
 	} else {
-		ba.accountDetails[accountNumber] -= amount
+		finalAmount -= amount
+		ba.accountDetails[accountNumber] = finalAmount
 	}
+	fmt.Println("initial balance:", initialAmount, ", amount deposited:", amount, ", current balance", finalAmount)
 }
 
 func Problem6() {
