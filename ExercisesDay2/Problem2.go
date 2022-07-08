@@ -4,19 +4,20 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
-func rate(id int, totalRating *int) {
+func rate(id int, totalRating *int32) {
 	fmt.Println("Student -", id, "started rating")
 	time.Sleep(time.Millisecond * time.Duration(rand.Intn(100)))
-	*totalRating += rand.Intn(6)
+	atomic.AddInt32(totalRating, rand.Int31n(6))
 	fmt.Println("Student -", id, "finished rating")
 }
 
 func Problem2() {
 	totalStudents := 200
-	var totalRating int
+	var totalRating int32
 	var wg sync.WaitGroup
 
 	for i := 1; i <= totalStudents; i++ {
