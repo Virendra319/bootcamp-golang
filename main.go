@@ -3,6 +3,7 @@ package main
 import (
 	"awesomeProject/ExercisesDay1"
 	"awesomeProject/ExercisesDay2"
+	"awesomeProject/ExercisesDay3"
 )
 
 func main() {
@@ -12,4 +13,5 @@ func main() {
 	ExercisesDay2.Problem1()
 	ExercisesDay2.Problem2()
 	ExercisesDay2.Problem3()
+	ExercisesDay3.Problem2()
 }
